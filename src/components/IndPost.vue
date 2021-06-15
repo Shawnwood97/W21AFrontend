@@ -3,7 +3,22 @@
   <div v-show="isShowing">
     <h2>{{ postInfo.title }}</h2>
     <p>{{ postInfo.content }}</p>
-    <button @click="deletePost">Delete</button>
+    <div class="botContainer">
+      <form action="javascript:void(0)">
+        <input
+          type="text"
+          :id="`editTitleInput${postInfo.id}`"
+          placeholder="Title"
+        />
+        <textarea
+          type="text"
+          :id="`editContentInput${postInfo.id}`"
+          placeholder="Content"
+        />
+        <input @click="editPost" type="submit" value="Edit Post" />
+      </form>
+      <button @click="deletePost">Delete</button>
+    </div>
   </div>
 </template>
 
@@ -21,7 +36,6 @@ export default {
       isShowing: true,
     };
   },
-
   methods: {
     deletePost() {
       axios
@@ -44,8 +58,41 @@ export default {
           console.log(err.response);
         });
     },
+
+    editPost() {
+      axios
+        .request({
+          url: "http://127.0.0.1:5000/posts",
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          data: {
+            postTitle: document.getElementById(
+              `editTitleInput${this.postInfo.id}`
+            ).value,
+            postContent: document.getElementById(
+              `editContentInput${this.postInfo.id}`
+            ).value,
+            postId: this.postInfo.id,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          this.postInfo.title = res.data[0].title;
+          this.postInfo.content = res.data[0].content;
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    },
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.botContainer {
+  display: grid;
+  grid-auto-flow: column;
+}
+</style>

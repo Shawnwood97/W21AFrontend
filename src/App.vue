@@ -1,14 +1,29 @@
 <template>
   <div id="app">
-    <form action="javascript:void(0)">
-      <label for="postTitle">Post Title</label>
-      <input type="text" name="postTitle" id="postTitleInput" required />
-      <label for="postContent">Post Content</label>
-      <textarea type="text" name="postContent" id="postContentInput" required />
-      <label for="userId">User Id</label>
-      <input type="number" name="userId" id="userIdInput" required />
-      <input @click="createPost" type="submit" value="Create Post" />
-    </form>
+    <!-- for if I do a login -->
+    <div id="forms">
+      <!-- <form action="javascript:void(0)">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="usernameInput" required />
+        <label for="password">Password</label>
+        <input type="password" name="password" id="passwordInput" required />
+        <input type="submit" value="Log In" />
+      </form> -->
+      <form action="javascript:void(0)">
+        <label for="postTitle">Post Title</label>
+        <input type="text" name="postTitle" id="postTitleInput" required />
+        <label for="postContent">Post Content</label>
+        <textarea
+          type="text"
+          name="postContent"
+          id="postContentInput"
+          required
+        />
+        <label for="userId">User Id</label>
+        <input type="number" name="userId" id="userIdInput" required />
+        <input @click="createPost" type="submit" value="Create Post" />
+      </form>
+    </div>
     <div id="postsContainer">
       <ind-post
         class="post"
@@ -119,5 +134,11 @@ form {
 
 button {
   margin-top: 10px;
+}
+
+#forms {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 30px;
 }
 </style>
